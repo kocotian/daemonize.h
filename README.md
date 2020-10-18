@@ -6,7 +6,7 @@ simply daemonize your program
 2. write `daemonize()` on beginning of your main with parameters:
     1. **chdir** directory, for example `"/"`
     2. **umask**, for example `0022`
-    3. **signals struct**, structure of {*SIGNAL NUMBER*, *SIGNAL HANDLER*}'s
+    3. **signalize**, function that will add signal catching
 
 ## license:
 do what the fuck you want to
@@ -16,14 +16,6 @@ program that daemonizes, exits with signal number after receiving SIGINT, SIGHUP
 ```c
 #include "daemonize.h"
 
-void sighandler(int signo);
-
-static const Signals sigs[] = {
-	{SIGINT, sighandler},
-	{SIGHUP, sighandler},
-	{SIGCHLD, sighandler},
-};
-
 void
 sighandler(int signo)
 {
@@ -31,9 +23,17 @@ sighandler(int signo)
 }
 
 void
+signalize(void)
+{
+	signal(SIGINT, sighandler);
+	signal(SIGHUP, sighandler);
+	signal(SIGCHLD, sighandler);
+}
+
+void
 main(void)
 {
-	daemonize("/", 0022, sigs);
+	daemonize("/", 0000, signalize);
 	while(1) sleep(60);
 }
 ```
