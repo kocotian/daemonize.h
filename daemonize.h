@@ -6,7 +6,7 @@
 /*
  * daemonize.h
  * simply daemonize your program
- * version 1.0.1
+ * version 1.1
  * creator: kocotian
  */
 
@@ -18,10 +18,8 @@
 #include <syslog.h>
 #include <unistd.h>
 
-extern void signalize(void);
-
 static int
-daemonize(char *chdir_, int umask_)
+daemonize(char *chdir_, int umask_, void *(signalize)(void))
 {
 	pid_t pid;
 	int fd;
