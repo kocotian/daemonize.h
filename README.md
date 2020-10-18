@@ -13,7 +13,7 @@ do what the fuck you want to
 
 ## example program:
 program that daemonizes, exits with signal number after receiving SIGINT, SIGHUP and SIGCHLD and just goes to minute sleeping forever
-```
+```c
 #include "daemonize.h"
 
 void sighandler(int signo);
