@@ -6,7 +6,7 @@
 /*
  * daemonize.h
  * simply daemonize your program
- * version 1.1
+ * version 1.2
  * creator: kocotian
  */
 
@@ -18,11 +18,18 @@
 #include <syslog.h>
 #include <unistd.h>
 
+#define LEN(x) (sizeof(x) / sizeof(*x))
+
+typedef struct {
+	int signo;
+	void (*handler)(int signo);
+} Signals;
+
 static int
-daemonize(char *chdir_, int umask_, void *(signalize)(void))
+daemonize(char *chdir_, int umask_, const Signals sigs[])
 {
 	pid_t pid;
-	int fd;
+	int fd, sig = -1;
 
 	if((pid = fork()) < 0)
 		return EXIT_FAILURE;
@@ -32,7 +39,8 @@ daemonize(char *chdir_, int umask_, void *(signalize)(void))
 	if(setsid() < 0)
 		return EXIT_FAILURE;
 
-	signalize();
+	while(++sig < LEN(sigs))
+		signal(sigs[sig].signo, sigs[sig].handler);
 
 	if((pid = fork()) < 0)
 		return EXIT_FAILURE;
