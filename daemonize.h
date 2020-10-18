@@ -6,7 +6,7 @@
 /*
  * daemonize.h
  * simply daemonize your program
- * version 1.1
+ * version 1.1.1
  * creator: kocotian
  */
 
@@ -19,7 +19,7 @@
 #include <unistd.h>
 
 static int
-daemonize(char *chdir_, int umask_, void *(signalize)(void))
+daemonize(char *chdir_, int umask_, void (*signalize)(void))
 {
 	pid_t pid;
 	int fd;
