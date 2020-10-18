@@ -15,7 +15,6 @@ do what the fuck you want to
 program that daemonizes, exits with signal number after receiving SIGINT, SIGHUP and SIGCHLD and just goes to minute sleeping forever
 ```
 #include "daemonize.h"
-#include <stdio.h>
 
 void
 sighandler(int signo)
