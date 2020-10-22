@@ -22,7 +22,8 @@
 #include <unistd.h>
 
 static int
-daemonize(char *chdir_, int umask_, void (*signalize)(void)) {
+daemonize(char *chdir_, int umask_, void (*signalize)(void))
+{
 	pid_t pid;
 	int fd;
 
