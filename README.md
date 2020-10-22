@@ -17,22 +17,19 @@ program that daemonizes, exits with signal number after receiving SIGINT, SIGHUP
 #include "daemonize.h"
 
 void
-sighandler(int signo)
-{
+sighandler(int signo) {
 	exit(signo);
 }
 
 void
-signalize(void)
-{
+signalize(void) {
 	signal(SIGINT, sighandler);
 	signal(SIGHUP, sighandler);
 	signal(SIGCHLD, sighandler);
 }
 
 void
-main(void)
-{
+main(void) {
 	daemonize("/", 0000, signalize);
 	while(1) sleep(60);
 }
